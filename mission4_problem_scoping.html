@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ภารกิจที่ 4 — Problem Scoping</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sarabun',sans-serif;background:#f8f9fa;color:#1a1a1a;font-size:16px;line-height:1.7}
+.wrap{max-width:720px;margin:0 auto;padding:24px 16px}
+.hband{background:#b45309;color:#fff;border-radius:12px;padding:20px 24px;margin-bottom:20px}
+.htag{font-size:11px;font-weight:700;letter-spacing:.08em;opacity:.8;margin-bottom:6px}
+.htitle{font-size:22px;font-weight:700;line-height:1.3}
+.hsub{font-size:14px;opacity:.85;margin-top:4px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.clabel{font-size:11px;font-weight:700;letter-spacing:.07em;color:#6b7280;margin-bottom:8px}
+.stext{font-size:14px;color:#374151;line-height:1.75}
+.stext strong{color:#b45309}
+.rubbox{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:16px 20px;margin-bottom:16px}
+.rublabel{font-size:11px;font-weight:700;letter-spacing:.07em;color:#92400e;margin-bottom:10px}
+table.rt{width:100%;border-collapse:collapse;font-size:13px}
+table.rt th{background:#b45309;color:#fff;padding:7px 10px;text-align:left;font-weight:600}
+table.rt td{padding:7px 10px;border-bottom:1px solid #fde68a;vertical-align:top}
+table.rt tr:last-child td{border-bottom:none}
+table.rt tr:nth-child(even) td{background:#fffbeb}
+.b4{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700;background:#d1fae5;color:#065f46}
+.b3{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700;background:#dbeafe;color:#1e40af}
+.b2{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700;background:#fef3c7;color:#92400e}
+.b1{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700;background:#fee2e2;color:#991b1b}
+.b0{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700;background:#f3f4f6;color:#4b5563}
+.canvas4w{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.wbox{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px 14px}
+.wtag{font-size:13px;font-weight:700;color:#b45309;margin-bottom:4px}
+.wdesc{font-size:12px;color:#6b7280;line-height:1.5}
+.qcard{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:20px;margin-bottom:16px}
+.qtag{font-size:11px;font-weight:700;letter-spacing:.07em;color:#6b7280;margin-bottom:6px}
+.qtitle{font-size:15px;font-weight:700;color:#111827;margin-bottom:10px}
+.qbody{font-size:14px;color:#374151;line-height:1.75;background:#f9fafb;border-left:3px solid #b45309;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:14px}
+.qbody em{color:#b45309;font-style:normal;font-weight:700}
+textarea{width:100%;min-height:140px;font-family:'Sarabun',sans-serif;font-size:14px;color:#111827;background:#f9fafb;border:1px solid #d1d5db;border-radius:8px;padding:12px 14px;resize:vertical;line-height:1.7}
+textarea:focus{outline:none;border-color:#b45309;background:#fff}
+textarea::placeholder{color:#9ca3af}
+.cc{font-size:12px;color:#9ca3af;text-align:right;margin-top:4px}
+.cc.ok{color:#059669}
+.btnS{width:100%;padding:12px;font-family:'Sarabun',sans-serif;font-size:15px;font-weight:700;cursor:pointer;border-radius:8px;border:none;background:#b45309;color:#fff;margin-top:4px}
+.btnS:hover{background:#92400e}
+.lbox{text-align:center;padding:28px;background:#fff;border-radius:10px;border:1px solid #e5e7eb}
+.spin{width:36px;height:36px;border:3px solid #fde68a;border-top-color:#b45309;border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 12px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.rcard{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:20px;margin-bottom:16px}
+.shdr{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.scircle{width:72px;height:72px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.scnum{font-size:28px;font-weight:700;line-height:1}
+.scden{font-size:12px;opacity:.7}
+.slevel{font-size:18px;font-weight:700;color:#111827}
+.sdesc{font-size:13px;color:#6b7280;margin-top:3px;line-height:1.5}
+.fblabel{font-size:11px;font-weight:700;letter-spacing:.07em;color:#6b7280;margin-bottom:8px}
+.fbtext{font-size:14px;color:#1f2937;line-height:1.8;white-space:pre-wrap}
+.btnR{padding:9px 22px;font-family:'Sarabun',sans-serif;font-size:14px;cursor:pointer;border-radius:8px;border:1px solid #d1d5db;background:#fff;color:#374151}
+.btnR:hover{background:#f3f4f6}
+.err{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;font-size:13px;color:#dc2626;margin-top:8px}
+.navrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.prevlink{display:block;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:12px 16px;text-decoration:none;font-size:13px;font-weight:700;color:#374151}
+.prevlink:hover{background:#f3f4f6}
+.donelink{display:block;background:#d1fae5;border:1px solid #6ee7b7;border-radius:10px;padding:12px 16px;text-decoration:none;font-size:13px;font-weight:700;color:#065f46;text-align:center}
+.donelink:hover{background:#a7f3d0}
+.navlink span{display:block;font-size:11px;font-weight:400;opacity:.7;margin-top:2px}
+.hint{background:#fefce8;border:1px solid #fef08a;border-radius:8px;padding:10px 14px;font-size:13px;color:#713f12;margin-bottom:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hband">
+  <div class="htag">แบบวัดความฉลาดรู้ทางปัญญาประดิษฐ์ · ภารกิจที่ 4 / 4</div>
+  <div class="htitle">การกำหนดขอบเขตปัญหา</div>
+  <div class="hsub">Problem Scoping — 4 คะแนน</div>
+</div>
+
+<div class="card">
+  <div class="clabel">สถานการณ์ปัญหา — Smart-Nexus</div>
+  <div class="stext">ระบบ <strong>Smart-Nexus</strong> ล้มเหลวในการลดค่าไฟ เพราะมักปิดไฟและแอร์ในจุดที่มีพนักงานทำงานอยู่จนเกิดความวุ่นวาย เนื่องจากทีมพัฒนาไม่ได้กำหนดขอบเขตปัญหาให้ชัดเจนก่อนเริ่มโครงการ</div>
+</div>
+
+<div class="rubbox">
+  <div class="rublabel">เกณฑ์การให้คะแนน (อ้างอิงจากแบบวัดจริง)</div>
+  <table class="rt">
+    <thead><tr><th style="width:72px">คะแนน</th><th>รายละเอียด</th></tr></thead>
+    <tbody>
+      <tr><td><span class="b4">4</span></td><td>นิยามขอบเขตปัญหาได้ครบทั้ง 4 ด้าน (4Ws) ชี้จุดบกพร่องของระบบเดิม พร้อมเสนอทิศทางแก้ไขที่วัดผลได้จริง</td></tr>
+      <tr><td><span class="b3">3</span></td><td>ระบุ 4Ws ได้ชัดเจน แยกแยะกลุ่มผู้ได้รับผลกระทบ (Who) และบริบท (Where) ได้ดี</td></tr>
+      <tr><td><span class="b2">2</span></td><td>ระบุ 4Ws ได้ครบแต่ขาดความเชื่อมโยง มองไม่เห็นรากเหง้าของปัญหาปิดไฟ/แอร์ผิดที่ผิดเวลา</td></tr>
+      <tr><td><span class="b1">1</span></td><td>ระบุ 4Ws ไม่ครบหรือกว้างเกินไปจนนำไปสู่การแก้ปัญหาไม่ได้ เช่น Who: ทุกคน</td></tr>
+      <tr><td><span class="b0">0</span></td><td>ไม่เขียนหรือไม่สอดคล้องกับกรอบ 4Ws</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="canvas4w">
+  <div class="wbox"><div class="wtag">Who — ใคร?</div><div class="wdesc">ผู้มีส่วนได้ส่วนเสีย: ใครได้รับผลกระทบโดยตรง/อ้อม?</div></div>
+  <div class="wbox"><div class="wtag">What — อะไร?</div><div class="wdesc">แก่นแท้ของปัญหา: ปัญหาคืออะไร มีหลักฐานยืนยันอะไร?</div></div>
+  <div class="wbox"><div class="wtag">Where — ที่ไหน?</div><div class="wdesc">บริบทสถานที่: ปัญหานี้เกิดขึ้นในสภาพแวดล้อมใด?</div></div>
+  <div class="wbox"><div class="wtag">Why — ทำไม?</div><div class="wdesc">คุณค่า: ถ้าแก้สำเร็จจะสร้างประโยชน์อะไร?</div></div>
+</div>
+
+<div id="fs">
+  <div class="qcard">
+    <div class="qtag">ส่วนที่ 4 · ภารกิจการวางโครงสร้างแก้ปัญหาพลังงาน</div>
+    <div class="qtitle">คำถาม (4 คะแนน)</div>
+    <div class="hint">💡 แนวทาง: ใช้กรอบ 4Ws Problem Canvas จากบทเรียน — ระบุให้ครบทั้ง Who (ผู้มีส่วนได้ส่วนเสีย), What (ปัญหาคืออะไร), Where (บริบทสถานที่), Why (ทำไมจึงสำคัญ) พร้อมเสนอแนวทางแก้ไขที่วัดผลได้</div>
+    <div class="qbody">Smart-Nexus ล้มเหลวในการลดค่าไฟ เพราะมักปิดไฟและแอร์ในจุดที่มีพนักงานทำงานอยู่จนเกิดความวุ่นวาย เนื่องจากทีมพัฒนาไม่ได้กำหนดขอบเขตปัญหาให้ชัดเจน หากท่านต้องรีเซ็ตโปรเจกต์ <em>"การลดพลังงานสิ้นเปลืองในอาคาร"</em> นี้ใหม่ จงระบุองค์ประกอบของปัญหาโดยใช้กรอบแนวคิด <em>4Ws Problem Canvas (Who, What, Where, Why)</em> เพื่อให้ AI ทำงานได้ตรงเป้าหมายและไม่กระทบการทำงานของคน</div>
+    <textarea id="ans" placeholder="Who: ระบุผู้มีส่วนได้ส่วนเสีย...&#10;What: ระบุปัญหาที่แท้จริงและหลักฐาน...&#10;Where: ระบุบริบทสถานที่...&#10;Why: ระบุคุณค่าที่จะได้รับ..." oninput="upd()"></textarea>
+    <div class="cc" id="cc">0 ตัวอักษร (แนะนำ 100 ตัวอักษรขึ้นไป)</div>
+  </div>
+  <button class="btnS" onclick="submit()">ส่งคำตอบเพื่อรับ Feedback</button>
+  <div id="er"></div>
+</div>
+
+<div id="ls" style="display:none">
+  <div class="lbox">
+    <div class="spin"></div>
+    <div style="font-size:14px;color:#6b7280">กำลังวิเคราะห์คำตอบตามเกณฑ์จากบทเรียนจริง...</div>
+  </div>
+</div>
+
+<div id="rs" style="display:none">
+  <div class="rcard">
+    <div class="shdr">
+      <div class="scircle" id="sc"><span class="scnum" id="sn">—</span><span class="scden">/4</span></div>
+      <div><div class="slevel" id="slv">—</div><div class="sdesc" id="sdc">—</div></div>
+    </div>
+    <div class="fblabel">FEEDBACK</div>
+    <div class="fbtext" id="fb">—</div>
+  </div>
+  <button class="btnR" onclick="reset()">ลองตอบใหม่</button>
+  <div class="navrow">
+    <a class="prevlink navlink" href="mission3_ai_foundations.html">← ภารกิจที่ 3<span>AI Foundations</span></a>
+    <a class="donelink navlink" href="mission1_human_agency.html">ครบทั้ง 4 ภารกิจแล้ว!<span>กลับไปทำซ้ำได้ตลอดเวลา</span></a>
+  </div>
+</div>
+</div>
+
+<script>
+const SYS=`คุณคือผู้ประเมินแบบวัดความฉลาดรู้ทางปัญญาประดิษฐ์ระดับพื้นฐาน
+
+เนื้อหาที่ผู้เรียนได้เรียนมา (บทที่ 4 - Problem Scoping):
+- 4Ws Problem Canvas: Who (ผู้มีส่วนได้ส่วนเสีย), What (แก่นแท้ปัญหา+หลักฐาน), Where (บริบทสถานที่), Why (คุณค่า/ประโยชน์)
+- ตัวอย่างจากบทเรียน: ปัญหาศัตรูพืชในภาคเกษตร — Who: เกษตรกร/ที่ปรึกษา/รัฐ, What: ศัตรูพืชทำลาย 30% ของรายได้ (ยืนยันโดยกรมวิชาการเกษตร), Where: พื้นที่ที่ชื้นและอุณหภูมิเหมาะสม, Why: เพิ่มผลผลิต ลดสารเคมี ยกระดับคุณภาพชีวิต
+- AI is not a Silver Bullet: AI ไม่เหมาะกับทุกปัญหา ต้องประเมินความพร้อม 3 มิติ: ข้อมูล, บุคลากร, IT Infrastructure
+- Problem Statement ที่ดีต้องมี Baseline และวัดผลได้ด้วย KPIs
+- การประเมินความเสี่ยง: ผลกระทบต่อสิ่งแวดล้อม, สิทธิ Privacy
+
+ประเมินข้อที่ 4 (Problem Scoping) เต็ม 4 คะแนน ตามเกณฑ์:
+4: นิยามขอบเขตปัญหาได้ครบทั้ง 4 ด้าน (4Ws) ชี้จุดบกพร่องของระบบเดิม พร้อมเสนอทิศทางแก้ไขที่วัดผลได้จริง
+3: ระบุ 4Ws ได้ชัดเจน แยกแยะกลุ่มผู้ได้รับผลกระทบ (Who) และบริบท (Where) ได้ดี
+2: ระบุ 4Ws ได้ครบแต่ขาดความเชื่อมโยง มองไม่เห็นรากเหง้าของปัญหาปิดไฟ/แอร์ผิดที่ผิดเวลา
+1: ระบุ 4Ws ไม่ครบหรือกว้างเกินไปจนนำไปสู่การแก้ปัญหาไม่ได้ เช่น Who: ทุกคน
+0: ไม่เขียนหรือไม่สอดคล้องกับกรอบ 4Ws
+
+ตอบเป็น JSON เท่านั้น:
+{"score":<0-4>,"level":"<ยอดเยี่ยม|ดีมาก|ดี|พอใช้|ต้องพัฒนา>","desc":"<ประโยคสั้นสรุประดับ>","feedback":"<feedback ภาษาไทย 3-4 ประโยค อ้างอิงแนวคิด 4Ws Canvas, Problem Statement, Baseline จากบทเรียน บอกจุดเด่น จุดที่ควรเสริม>"}`;
+
+function upd(){const v=document.getElementById('ans').value.length;const el=document.getElementById('cc');el.textContent=v+' ตัวอักษร (แนะนำ 100 ตัวอักษรขึ้นไป)';el.className='cc'+(v>=100?' ok':'');}
+function col(s){if(s>=4)return{bg:'#d1fae5',tx:'#065f46'};if(s>=3)return{bg:'#dbeafe',tx:'#1e40af'};if(s>=2)return{bg:'#fef3c7',tx:'#92400e'};if(s>=1)return{bg:'#fee2e2',tx:'#991b1b'};return{bg:'#f3f4f6',tx:'#4b5563'};}
+
+async function submit(){
+  const a=document.getElementById('ans').value.trim();
+  if(a.length<20){document.getElementById('er').innerHTML='<div class="err">กรุณาพิมพ์คำตอบอย่างน้อย 20 ตัวอักษร</div>';return;}
+  document.getElementById('er').innerHTML='';
+  document.getElementById('fs').style.display='none';
+  document.getElementById('ls').style.display='block';
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:700,system:SYS,messages:[{role:'user',content:'คำตอบผู้เรียน:\n'+a}]})});
+    const d=await r.json();
+    const j=JSON.parse(d.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim());
+    document.getElementById('ls').style.display='none';
+    document.getElementById('rs').style.display='block';
+    const c=col(j.score);
+    const ci=document.getElementById('sc');ci.style.background=c.bg;ci.style.color=c.tx;
+    document.getElementById('sn').textContent=j.score;
+    document.getElementById('slv').textContent=j.level;
+    document.getElementById('sdc').textContent=j.desc;
+    document.getElementById('fb').textContent=j.feedback;
+  }catch(e){
+    document.getElementById('ls').style.display='none';
+    document.getElementById('fs').style.display='block';
+    document.getElementById('er').innerHTML='<div class="err">เกิดข้อผิดพลาด กรุณาลองใหม่</div>';
+  }
+}
+function reset(){document.getElementById('rs').style.display='none';document.getElementById('fs').style.display='block';document.getElementById('ans').value='';upd();}
+</script>
+</body>
+</html>

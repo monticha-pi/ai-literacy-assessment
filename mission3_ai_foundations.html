@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ภารกิจที่ 3 — AI Foundations</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sarabun',sans-serif;background:#f8f9fa;color:#1a1a1a;font-size:16px;line-height:1.7}
+.wrap{max-width:720px;margin:0 auto;padding:24px 16px}
+.hband{background:#0e7490;color:#fff;border-radius:12px;padding:20px 24px;margin-bottom:20px}
+.htag{font-size:11px;font-weight:700;letter-spacing:.08em;opacity:.8;margin-bottom:6px}
+.htitle{font-size:22px;font-weight:700;line-height:1.3}
+.hsub{font-size:14px;opacity:.85;margin-top:4px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.clabel{font-size:11px;font-weight:700;letter-spacing:.07em;color:#6b7280;margin-bottom:8px}
+.stext{font-size:14px;color:#374151;line-height:1.75}
+.stext strong{color:#0e7490}
+.rubbox{background:#ecfeff;border:1px solid #a5f3fc;border-radius:10px;padding:16px 20px;margin-bottom:16px}
+.rublabel{font-size:11px;font-weight:700;letter-spacing:.07em;color:#0e7490;margin-bottom:10px}
+table.rt{width:100%;border-collapse:collapse;font-size:13px}
+table.rt th{background:#0e7490;color:#fff;padding:7px 10px;text-align:left;font-weight:600}
+table.rt td{padding:7px 10px;border-bottom:1px solid #cffafe;vertical-align:top}
+table.rt tr:last-child td{border-bottom:none}
+table.rt tr:nth-child(even) td{background:#f0fdff}
+.b4{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700;background:#d1fae5;color:#065f46}
+.b3{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700;background:#dbeafe;color:#1e40af}
+.b2{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700;background:#fef3c7;color:#92400e}
+.b1{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700;background:#fee2e2;color:#991b1b}
+.b0{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700;background:#f3f4f6;color:#4b5563}
+.qcard{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:20px;margin-bottom:16px}
+.qtag{font-size:11px;font-weight:700;letter-spacing:.07em;color:#6b7280;margin-bottom:6px}
+.qtitle{font-size:15px;font-weight:700;color:#111827;margin-bottom:10px}
+.qbody{font-size:14px;color:#374151;line-height:1.75;background:#f9fafb;border-left:3px solid #0e7490;padding:12px 14px;border-radius:0 8px 8px 0;margin-bottom:14px}
+.qbody em{color:#0e7490;font-style:normal;font-weight:700}
+textarea{width:100%;min-height:130px;font-family:'Sarabun',sans-serif;font-size:14px;color:#111827;background:#f9fafb;border:1px solid #d1d5db;border-radius:8px;padding:12px 14px;resize:vertical;line-height:1.7}
+textarea:focus{outline:none;border-color:#0e7490;background:#fff}
+textarea::placeholder{color:#9ca3af}
+.cc{font-size:12px;color:#9ca3af;text-align:right;margin-top:4px}
+.cc.ok{color:#059669}
+.btnS{width:100%;padding:12px;font-family:'Sarabun',sans-serif;font-size:15px;font-weight:700;cursor:pointer;border-radius:8px;border:none;background:#0e7490;color:#fff;margin-top:4px}
+.btnS:hover{background:#0c6478}
+.lbox{text-align:center;padding:28px;background:#fff;border-radius:10px;border:1px solid #e5e7eb}
+.spin{width:36px;height:36px;border:3px solid #cffafe;border-top-color:#0e7490;border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 12px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.rcard{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:20px;margin-bottom:16px}
+.shdr{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.scircle{width:72px;height:72px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.scnum{font-size:28px;font-weight:700;line-height:1}
+.scden{font-size:12px;opacity:.7}
+.slevel{font-size:18px;font-weight:700;color:#111827}
+.sdesc{font-size:13px;color:#6b7280;margin-top:3px;line-height:1.5}
+.fblabel{font-size:11px;font-weight:700;letter-spacing:.07em;color:#6b7280;margin-bottom:8px}
+.fbtext{font-size:14px;color:#1f2937;line-height:1.8;white-space:pre-wrap}
+.btnR{padding:9px 22px;font-family:'Sarabun',sans-serif;font-size:14px;cursor:pointer;border-radius:8px;border:1px solid #d1d5db;background:#fff;color:#374151}
+.btnR:hover{background:#f3f4f6}
+.err{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;font-size:13px;color:#dc2626;margin-top:8px}
+.navrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.prevlink{display:block;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:12px 16px;text-decoration:none;font-size:13px;font-weight:700;color:#374151}
+.prevlink:hover{background:#f3f4f6}
+.nxtlink{display:block;background:#ecfeff;border:1px solid #a5f3fc;border-radius:10px;padding:12px 16px;text-decoration:none;font-size:13px;font-weight:700;color:#0e7490}
+.nxtlink:hover{background:#cffafe}
+.navlink span{display:block;font-size:11px;font-weight:400;opacity:.7;margin-top:2px}
+.hint{background:#fefce8;border:1px solid #fef08a;border-radius:8px;padding:10px 14px;font-size:13px;color:#713f12;margin-bottom:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hband">
+  <div class="htag">แบบวัดความฉลาดรู้ทางปัญญาประดิษฐ์ · ภารกิจที่ 3 / 4</div>
+  <div class="htitle">รากฐานเทคโนโลยีปัญญาประดิษฐ์</div>
+  <div class="hsub">AI Foundations — 4 คะแนน</div>
+</div>
+
+<div class="card">
+  <div class="clabel">สถานการณ์ปัญหา — Smart-Nexus</div>
+  <div class="stext">พนักงานในบริษัท TechLogix เริ่มเกิดอาการ <strong>"AI Worship"</strong> เชื่อว่า Smart-Nexus "เข้าใจ" ศักยภาพของมนุษย์อย่างลึกซึ้ง และมีอำนาจทำนายความสำเร็จของคนได้แม่นยำกว่าหัวหน้างาน จนไม่กล้าตั้งคำถามกับคำตัดสินของระบบ</div>
+</div>
+
+<div class="rubbox">
+  <div class="rublabel">เกณฑ์การให้คะแนน (อ้างอิงจากแบบวัดจริง)</div>
+  <table class="rt">
+    <thead><tr><th style="width:72px">คะแนน</th><th>รายละเอียด</th></tr></thead>
+    <tbody>
+      <tr><td><span class="b4">4</span></td><td>ประยุกต์ใช้ทฤษฎีห้องภาษาจีนเพื่อยืนยันว่า AI ไร้ความเข้าใจโดยสิ้นเชิง และสรุปได้คมคายว่าทำไม AI จึงต้องอยู่ใต้ดุลยพินิจของมนุษย์เสมอ</td></tr>
+      <tr><td><span class="b3">3</span></td><td>ใช้แนวคิดห้องภาษาจีนอธิบายได้ว่า AI ทำงานแค่ตาม Syntax แต่ไม่ได้เข้าใจ Semantics</td></tr>
+      <tr><td><span class="b2">2</span></td><td>อธิบายทฤษฎีห้องภาษาจีนได้ แต่ยังสับสนในการนำมาหักล้างมายาคติ "ความเข้าใจ" ของ AI</td></tr>
+      <tr><td><span class="b1">1</span></td><td>ยังเชื่อว่า AI มีความเข้าใจหรือความรู้สึกเหมือนมนุษย์ และมอง AI เป็นสิ่งวิเศษ</td></tr>
+      <tr><td><span class="b0">0</span></td><td>ไม่เขียนหรือไม่สามารถประยุกต์ใช้ทฤษฎีได้เลย</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="fs">
+  <div class="qcard">
+    <div class="qtag">ส่วนที่ 3 · ภารกิจการรื้อถอนมายาคติ AI</div>
+    <div class="qtitle">คำถาม (4 คะแนน)</div>
+    <div class="hint">💡 แนวทาง: ใช้ทฤษฎี "ห้องภาษาจีน" ของ John Searle จากบทเรียน — อธิบายว่า AI ทำงานเพียง Syntax (กฎเกณฑ์ทางสัญลักษณ์) แต่ไม่มี Semantics (ความเข้าใจความหมายที่แท้จริง) คล้ายชายอังกฤษในห้องที่ตอบภาษาจีนได้โดยไม่เข้าใจ</div>
+    <div class="qbody">พนักงานเริ่มเกิดอาการ "AI Worship" เชื่อว่า Smart-Nexus "เข้าใจ" ศักยภาพมนุษย์อย่างลึกซึ้ง จงอธิบายให้พนักงานเข้าใจว่า AI เป็นเพียง <em>"Logical Tool"</em> ไม่ใช่สิ่งเหนือธรรมชาติ โดยใช้แนวคิด <em>"ห้องภาษาจีน" (Chinese Room)</em> ของ John Searle มาอธิบายว่าทำไม AI จึงไม่ได้ "เข้าใจ" ตัวตนของผู้สมัครจริงๆ</div>
+    <textarea id="ans" placeholder="อธิบายทฤษฎีห้องภาษาจีน และเชื่อมโยงกับการที่ AI ทำงานตาม Syntax แต่ขาด Semantic Understanding ทำให้ไม่ควรไว้วางใจ AI อย่างไม่มีเงื่อนไข..." oninput="upd()"></textarea>
+    <div class="cc" id="cc">0 ตัวอักษร (แนะนำ 80 ตัวอักษรขึ้นไป)</div>
+  </div>
+  <button class="btnS" onclick="submit()">ส่งคำตอบเพื่อรับ Feedback</button>
+  <div id="er"></div>
+</div>
+
+<div id="ls" style="display:none">
+  <div class="lbox">
+    <div class="spin"></div>
+    <div style="font-size:14px;color:#6b7280">กำลังวิเคราะห์คำตอบตามเกณฑ์จากบทเรียนจริง...</div>
+  </div>
+</div>
+
+<div id="rs" style="display:none">
+  <div class="rcard">
+    <div class="shdr">
+      <div class="scircle" id="sc"><span class="scnum" id="sn">—</span><span class="scden">/4</span></div>
+      <div><div class="slevel" id="slv">—</div><div class="sdesc" id="sdc">—</div></div>
+    </div>
+    <div class="fblabel">FEEDBACK</div>
+    <div class="fbtext" id="fb">—</div>
+  </div>
+  <button class="btnR" onclick="reset()">ลองตอบใหม่</button>
+  <div class="navrow">
+    <a class="prevlink navlink" href="mission2_embodied_ethics.html">← ภารกิจที่ 2<span>Embodied Ethics</span></a>
+    <a class="nxtlink navlink" href="mission4_problem_scoping.html">ภารกิจที่ 4 →<span>Problem Scoping · 4Ws Canvas</span></a>
+  </div>
+</div>
+</div>
+
+<script>
+const SYS=`คุณคือผู้ประเมินแบบวัดความฉลาดรู้ทางปัญญาประดิษฐ์ระดับพื้นฐาน
+
+เนื้อหาที่ผู้เรียนได้เรียนมา (บทที่ 1 และ 3 - AI Foundations & Human Agency):
+- ทฤษฎีห้องภาษาจีน (Chinese Room) ของ John Searle ปี 1980: ชายอังกฤษในห้องปิดตายจัดเรียงสัญลักษณ์จีนตามคู่มือโดยไม่เข้าใจความหมาย แต่คนภายนอกเชื่อว่าเขาพูดจีนได้
+- AI ทำงานเพียง Syntactic Manipulation (จัดการสัญลักษณ์ตามกฎ) ไม่มี Semantic Understanding (ความเข้าใจความหมายที่แท้จริง)
+- AI ปัจจุบันทั้งหมดเป็น Artificial Narrow Intelligence (ANI) ขับเคลื่อนด้วย Next-Token Prediction และสถิติ ไม่ใช่ความเข้าใจ
+- AI ไม่มี Qualia, Self-awareness, หรือประสบการณ์เชิงอัตวิสัย
+- ANI vs Strong AI: ปัจจุบันมีแค่ ANI ซึ่งทำงานเฉพาะด้าน ไม่มี Strong AI
+- Demystification: การทลายมายาคติช่วยให้มนุษย์กล้าตรวจสอบและควบคุม AI ได้
+
+ประเมินข้อที่ 3 (AI Foundations) เต็ม 4 คะแนน ตามเกณฑ์:
+4: ประยุกต์ใช้ทฤษฎีห้องภาษาจีนเพื่อยืนยันว่า AI ไร้ความเข้าใจโดยสิ้นเชิง และสรุปได้คมคายว่าทำไม AI จึงต้องอยู่ใต้ดุลยพินิจของมนุษย์เสมอ
+3: ใช้แนวคิดห้องภาษาจีนอธิบายได้ว่า AI ทำงานแค่ตาม Syntax แต่ไม่ได้เข้าใจ Semantics
+2: อธิบายทฤษฎีห้องภาษาจีนได้ แต่ยังสับสนในการนำมาหักล้างมายาคติ "ความเข้าใจ" ของ AI ในสถานการณ์จริง
+1: ยังเชื่อว่า AI มีความเข้าใจหรือความรู้สึกเหมือนมนุษย์
+0: ไม่เขียนหรือไม่สามารถประยุกต์ใช้ทฤษฎีได้เลย
+
+ตอบเป็น JSON เท่านั้น:
+{"score":<0-4>,"level":"<ยอดเยี่ยม|ดีมาก|ดี|พอใช้|ต้องพัฒนา>","desc":"<ประโยคสั้นสรุประดับ>","feedback":"<feedback ภาษาไทย 3-4 ประโยค อ้างอิงแนวคิด Chinese Room, Syntax vs Semantics, ANI จากบทเรียน บอกจุดเด่น จุดที่ควรเสริม>"}`;
+
+function upd(){const v=document.getElementById('ans').value.length;const el=document.getElementById('cc');el.textContent=v+' ตัวอักษร (แนะนำ 80 ตัวอักษรขึ้นไป)';el.className='cc'+(v>=80?' ok':'');}
+function col(s){if(s>=4)return{bg:'#d1fae5',tx:'#065f46'};if(s>=3)return{bg:'#dbeafe',tx:'#1e40af'};if(s>=2)return{bg:'#fef3c7',tx:'#92400e'};if(s>=1)return{bg:'#fee2e2',tx:'#991b1b'};return{bg:'#f3f4f6',tx:'#4b5563'};}
+
+async function submit(){
+  const a=document.getElementById('ans').value.trim();
+  if(a.length<20){document.getElementById('er').innerHTML='<div class="err">กรุณาพิมพ์คำตอบอย่างน้อย 20 ตัวอักษร</div>';return;}
+  document.getElementById('er').innerHTML='';
+  document.getElementById('fs').style.display='none';
+  document.getElementById('ls').style.display='block';
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:700,system:SYS,messages:[{role:'user',content:'คำตอบผู้เรียน:\n'+a}]})});
+    const d=await r.json();
+    const j=JSON.parse(d.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim());
+    document.getElementById('ls').style.display='none';
+    document.getElementById('rs').style.display='block';
+    const c=col(j.score);
+    const ci=document.getElementById('sc');ci.style.background=c.bg;ci.style.color=c.tx;
+    document.getElementById('sn').textContent=j.score;
+    document.getElementById('slv').textContent=j.level;
+    document.getElementById('sdc').textContent=j.desc;
+    document.getElementById('fb').textContent=j.feedback;
+  }catch(e){
+    document.getElementById('ls').style.display='none';
+    document.getElementById('fs').style.display='block';
+    document.getElementById('er').innerHTML='<div class="err">เกิดข้อผิดพลาด กรุณาลองใหม่</div>';
+  }
+}
+function reset(){document.getElementById('rs').style.display='none';document.getElementById('fs').style.display='block';document.getElementById('ans').value='';upd();}
+</script>
+</body>
+</html>
